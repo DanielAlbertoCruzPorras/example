@@ -33,17 +33,17 @@ function mostrarMenu() {
 
       switch (opcion) {
           case "1":
-              registrarMascota();
-              break;
+              registrarMascota(mostrarMenu);
+              return;
           case "2":
               listarMascotas();
               break;
           case "3":
-              buscarMascota();
-              break;
+              buscarMascota(mostrarMenu);
+              return;
           case "4":
-              actualizarSalud();
-              break;
+              actualizarSalud(mostrarMenu);
+              return;
           case "5":
               eliminarMascota();
               break;
@@ -56,26 +56,27 @@ function mostrarMenu() {
   } while (opcion !== "6");
 }
 
-function registrarMascota() {
+function registrandoAndo(nuevaMascota, callback) {
+  alert("Validando la información de la mascota...");
+
+  setTimeout(() => {
+    mascotas.push(nuevaMascota);
+    alert("¡Mascota registrada exitosamente!");
+    callback();  // Solo después de terminar se ejecuta el callback
+  }, 2000);
+}
+
+function registrarMascota(callback) {
   let nombre = prompt("¿Cuál es el nombre de la mascota?");
   let especie = prompt("¿Qué especie es tu mascota? (Perro, Gato, Caballo, etc.)");
   let edad = prompt("¿Cuántos años tiene tu mascota?");
   let peso = prompt("¿Cuánto pesa tu mascota en kilogramos?");
   let salud = prompt("¿Cómo está la salud de tu mascota? (Sano, Enfermo, En tratamiento)");
   
-  alert("Validando la información de la mascota...");
-
-  // Simulamos un retardo de 2 segundos con setTimeout
-  setTimeout(() => {
-      // Crear una nueva instancia de la clase Mascota usando el constructor
-      let nuevaMascota = new Mascota(nombre, especie, edad, peso, salud);
-
-      // Agregar la nueva mascota al arreglo
-      mascotas.push(nuevaMascota);
-      alert("¡Mascota registrada exitosamente!");
-  }, 2000); // 2000 milisegundos = 2 segundos
+  
+  let nuevaMascota = new Mascota(nombre, especie, edad, peso, salud);
+  registrandoAndo(nuevaMascota, callback)
 }
-
 
 //============================= Listar Mascota ==========================================
 
@@ -94,27 +95,43 @@ function listarMascotas() {
 
 //============================= Buscar Mascota ==========================================
 
-function buscarMascota() {
-  let nombreBuscado = prompt("Ingrese el nombre de la mascota que desea buscar:");
-  
-  alert("Buscando en la base de datos...");
+function buscandoAndo(mascotaEncontrada, callback) {
+  alert("Validando la información de la mascota...");
 
-  // Simulamos un retardo de 2.5 segundos en la búsqueda
   setTimeout(() => {
-    //Buscar mascota en el arreglo
-    let mascotaEncontrada = mascotas.find(mascota => mascota.nombre.toLowerCase() === nombreBuscado.toLowerCase());
-
     if (mascotaEncontrada) {
       alert("Mascota encontrada:\n" + mascotaEncontrada.mostrarInformacion());
     } else {
       alert("No se encontró ninguna mascota con ese nombre.");
     }
-  }, 2500); // 2.5 segundos de retardo
+    callback()
+  }, 2000);
+}
+
+function buscarMascota(callback) {
+  let nombreBuscado = prompt("Ingrese el nombre de la mascota que desea buscar:");
+  
+  alert("Buscando en la base de datos...");
+
+  let mascotaEncontrada = mascotas.find(mascota => mascota.nombre.toLowerCase() === nombreBuscado.toLowerCase());
+
+  // Simulamos un retardo de 2.5 segundos en la búsqueda
+  buscandoAndo(mascotaEncontrada, callback)
 }
 
 //============================= Actualizar Mascota ==========================================
 
-function actualizarSalud() {
+function actualizandoAndo(mascotaEncontrada, nuevoEstado, callback) {
+  alert("Validando la información de la mascota...");
+
+  setTimeout(() => {
+    mascotaEncontrada.salud = nuevoEstado;
+    alert("Estado de salud actualizado exitosamente.\n" + mascotaEncontrada.mostrarInformacion());
+    callback();  // Solo después de terminar se ejecuta el callback
+  }, 2000);
+}
+
+function actualizarSalud(callback) {
   let nombreBuscado = prompt("Ingrese el nombre de la mascota cuya salud desea actualizar:");
 
   // Buscar la mascota en el arreglo
@@ -125,12 +142,10 @@ function actualizarSalud() {
     alert("Actualizando el estado de salud en el sistema...");
 
     // Simulamos un retardo de 3 segundos en la actualización
-    setTimeout(() => {
-      mascotaEncontrada.salud = nuevoEstado;
-      alert("Estado de salud actualizado exitosamente.\n" + mascotaEncontrada.mostrarInformacion());
-    }, 3000); // 3 segundos de espera
+    actualizandoAndo(mascotaEncontrada, nuevoEstado, callback)
   } else {
     alert("No se encontró ninguna mascota con ese nombre.");
+    callback();
   }
 }
 
