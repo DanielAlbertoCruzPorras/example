@@ -62,13 +62,18 @@ function registrarMascota() {
   let edad = prompt("¿Cuántos años tiene tu mascota?");
   let peso = prompt("¿Cuánto pesa tu mascota en kilogramos?");
   let salud = prompt("¿Cómo está la salud de tu mascota? (Sano, Enfermo, En tratamiento)");
+  
+  alert("Validando la información de la mascota...");
 
-  // Crear una nueva instancia de la clase Mascota usando el constructor
-  let nuevaMascota = new Mascota(nombre, especie, edad, peso, salud);
+  // Simulamos un retardo de 2 segundos con setTimeout
+  setTimeout(() => {
+      // Crear una nueva instancia de la clase Mascota usando el constructor
+      let nuevaMascota = new Mascota(nombre, especie, edad, peso, salud);
 
-  // Agregar la nueva mascota al arreglo
-  mascotas.push(nuevaMascota);
-  alert("¡Mascota registrada exitosamente!");
+      // Agregar la nueva mascota al arreglo
+      mascotas.push(nuevaMascota);
+      alert("¡Mascota registrada exitosamente!");
+  }, 2000); // 2000 milisegundos = 2 segundos
 }
 
 
@@ -92,14 +97,19 @@ function listarMascotas() {
 function buscarMascota() {
   let nombreBuscado = prompt("Ingrese el nombre de la mascota que desea buscar:");
   
-  // Buscar la mascota en el arreglo
-  let mascotaEncontrada = mascotas.find(mascota => mascota.nombre.toLowerCase() === nombreBuscado.toLowerCase());
+  alert("Buscando en la base de datos...");
 
-  if (mascotaEncontrada) {
+  // Simulamos un retardo de 2.5 segundos en la búsqueda
+  setTimeout(() => {
+    //Buscar mascota en el arreglo
+    let mascotaEncontrada = mascotas.find(mascota => mascota.nombre.toLowerCase() === nombreBuscado.toLowerCase());
+
+    if (mascotaEncontrada) {
       alert("Mascota encontrada:\n" + mascotaEncontrada.mostrarInformacion());
-  } else {
+    } else {
       alert("No se encontró ninguna mascota con ese nombre.");
-  }
+    }
+  }, 2500); // 2.5 segundos de retardo
 }
 
 //============================= Actualizar Mascota ==========================================
@@ -111,11 +121,16 @@ function actualizarSalud() {
   let mascotaEncontrada = mascotas.find(mascota => mascota.nombre.toLowerCase() === nombreBuscado.toLowerCase());
 
   if (mascotaEncontrada) {
-      let nuevoEstado = prompt("Ingrese el nuevo estado de salud (Sano, Enfermo, En tratamiento):");
+    let nuevoEstado = prompt("Ingrese el nuevo estado de salud (Sano, Enfermo, En tratamiento):");
+    alert("Actualizando el estado de salud en el sistema...");
+
+    // Simulamos un retardo de 3 segundos en la actualización
+    setTimeout(() => {
       mascotaEncontrada.salud = nuevoEstado;
       alert("Estado de salud actualizado exitosamente.\n" + mascotaEncontrada.mostrarInformacion());
+    }, 3000); // 3 segundos de espera
   } else {
-      alert("No se encontró ninguna mascota con ese nombre.");
+    alert("No se encontró ninguna mascota con ese nombre.");
   }
 }
 
